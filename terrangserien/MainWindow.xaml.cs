@@ -13,6 +13,7 @@ namespace terrangserien
     public partial class MainWindow : Window
     {
         IList<Person> persons;
+        IList<Person> filteredPersons;
 
         const string INTERMEDIATE_FILE_NAME = "terrangserien.csv";
 
@@ -37,6 +38,7 @@ namespace terrangserien
                         ExcelReaderWriter.Write(ref outFilePath, ref persons);
                         */
             DataGridPersons.ItemsSource = persons;
+            filteredPersons = persons;
         }
 
         private IList<Person> CreateFilter()
@@ -54,7 +56,8 @@ namespace terrangserien
                 SocialNumber = socialNumber,
                 Number = number,
             };
-            return persons.FilterPersons(filter);
+            filteredPersons = persons.FilterPersons(filter);
+            return filteredPersons;
         }
 
         private void TextBox_Name_TextChanged(object sender, TextChangedEventArgs e)
@@ -115,7 +118,9 @@ namespace terrangserien
 
         private void UpdatePersonFromRowColumn(int row, int col, string value)
         {
-            Person person = persons.ElementAt(row);
+            Person tempPerson = filteredPersons.ElementAt(row);
+            int realRow = tempPerson.Id;
+            Person person = persons.ElementAt(realRow);
             Log.Logger.Information("Före uppdateringen {Namn}, {Efternamn}, {Sträcka}, {Kön}, {Personnummer}, {Nummer}, {Klass}, {Result0}, {Result1}, {Result2}, {Result3}, {Result4}, {Result5}", 
                 person.Name, 
                 person.Surname, 
@@ -186,7 +191,7 @@ namespace terrangserien
                 person.Result5 = value;
             }
 
-            persons[row] = person;
+            persons[realRow] = person;
 
             Log.Logger.Information("Efter uppdateringen {Namn}, {Efternamn}, {Sträcka}, {Kön}, {Personnummer}, {Nummer}, {Klass}, {Result0}, {Result1}, {Result2}, {Result3}, {Result4}, {Result5}",
                 person.Name,
@@ -211,6 +216,8 @@ namespace terrangserien
         {
             int row = e.Row.GetIndex();
             int col = e.Column.DisplayIndex;
+
+            var firstRow = (e.Row.Item as DataGridRow);
             var editedTextbox = e.EditingElement as TextBox;
             UpdatePersonFromRowColumn(row, col, editedTextbox.Text);
         }

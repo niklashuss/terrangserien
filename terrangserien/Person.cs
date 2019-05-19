@@ -1,7 +1,16 @@
-﻿namespace terrangserien
+﻿using Serilog;
+
+namespace terrangserien
 {
-    public struct Person
+    public class Person
     {
+
+        private Person(int id)
+        {
+            Id = id;
+        }
+
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Gender { get; set; }
@@ -15,5 +24,17 @@
         public string Result3 { get; set; }
         public string Result4 { get; set; }
         public string Result5 { get; set; }
+
+        private static int id = 0;
+        private static int CreateId()
+        {
+            return id++;
+        }
+
+        public static Person Create()
+        {
+            int id = CreateId();
+            return new Person(id);
+        }
     }
 }

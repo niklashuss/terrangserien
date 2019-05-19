@@ -28,7 +28,7 @@ namespace terrangserien
                     {
                         continue;
                     }
-                    Person person = new Person();
+                    Person person = Person.Create();
 
                     person.Distance = row.GetCell(0).ToString().Trim();
                     person.Gender = row.GetCell(1).StringCellValue.Trim();

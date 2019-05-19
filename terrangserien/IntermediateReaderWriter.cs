@@ -17,7 +17,7 @@ namespace terrangserien
                 {
                     int i = 0;
                     string[] entries = line.Split(';');
-                    Person person = new Person();
+                    Person person = Person.Create();
                     person.Name = entries[i++];
                     person.Surname = entries[i++];
                     person.Distance = entries[i++];
