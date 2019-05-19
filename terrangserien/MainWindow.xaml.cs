@@ -1,23 +1,9 @@
-﻿using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
-using NPOI.XSSF.UserModel;
-using Serilog;
+﻿using Serilog;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace terrangserien
 {
@@ -27,6 +13,8 @@ namespace terrangserien
     public partial class MainWindow : Window
     {
         IList<Person> persons;
+
+        const string INTERMEDIATE_FILE_NAME = "terrangserien.csv";
 
         public MainWindow()
         {
@@ -39,11 +27,15 @@ namespace terrangserien
                 .CreateLogger();
 
             Log.Logger.Information("Starting application");
+//            string inFilePath = @"Terrängserie 2019_14_maj.xlsx";
+//            persons = ExcelReaderWriter.Read(ref inFilePath);
 
-            string inFilePath = @"Terrängserien.xlsx";
-            persons = ExcelReaderWriter.Read(ref inFilePath);
-            string outFilePath = @"Terrängserien_new.xlsx";
-            ExcelReaderWriter.Write(ref outFilePath, ref persons);
+//            IntermediateReaderWriter.Write("terrangserien.csv", ref persons);
+            persons = IntermediateReaderWriter.Read(INTERMEDIATE_FILE_NAME);
+            /*
+                        string outFilePath = @"Terrängserien_new.xlsx";
+                        ExcelReaderWriter.Write(ref outFilePath, ref persons);
+                        */
             DataGridPersons.ItemsSource = persons;
         }
 
@@ -124,7 +116,7 @@ namespace terrangserien
         private void UpdatePersonFromRowColumn(int row, int col, string value)
         {
             Person person = persons.ElementAt(row);
-            Log.Logger.Information("Updaterar {Namn}, {Efternamn}, {Sträcka}, {Kön}, {Personnummer}, {Nummer}, {Klass}, {Dag 1}, {Dag 2}, {Dag 3}, {Dag 4}, {Dag 5}, {Dag 6}", 
+            Log.Logger.Information("Före uppdateringen {Namn}, {Efternamn}, {Sträcka}, {Kön}, {Personnummer}, {Nummer}, {Klass}, {Result0}, {Result1}, {Result2}, {Result3}, {Result4}, {Result5}", 
                 person.Name, 
                 person.Surname, 
                 person.Distance, 
@@ -140,6 +132,7 @@ namespace terrangserien
                 person.Result5
                 );
 
+            // stupid...
             if (col == 0)
             {
                 person.Name = value;
@@ -188,12 +181,14 @@ namespace terrangserien
             {
                 person.Result4 = value;
             }
-            else if (col == 13)
+            else if (col == 12)
             {
                 person.Result5 = value;
             }
 
-            Log.Logger.Information("Updaterar {Namn}, {Efternamn}, {Sträcka}, {Kön}, {Personnummer}, {Nummer}, {Klass}, {Dag 1}, {Dag 2}, {Dag 3}, {Dag 4}, {Dag 5}, {Dag 6}",
+            persons[row] = person;
+
+            Log.Logger.Information("Efter uppdateringen {Namn}, {Efternamn}, {Sträcka}, {Kön}, {Personnummer}, {Nummer}, {Klass}, {Result0}, {Result1}, {Result2}, {Result3}, {Result4}, {Result5}",
                 person.Name,
                 person.Surname,
                 person.Distance,
@@ -209,6 +204,7 @@ namespace terrangserien
                 person.Result5
                 );
 
+            IntermediateReaderWriter.Write(INTERMEDIATE_FILE_NAME, ref persons);
         }
 
         private void DataGridPersons_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)

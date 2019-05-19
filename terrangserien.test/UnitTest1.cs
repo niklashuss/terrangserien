@@ -40,11 +40,11 @@ namespace terrangserien.test
         }
 
         [TestMethod]
-        public void PersonListExtensionsTests_GenderFilter_Empty_Ok()
+        public void PersonListExtensionsTests_GenderFilter_EmptyReturnsAll_Ok()
         {
             PersonFilter filter = new PersonFilter { Gender = "" };
             var Result = _testData.FilterPersons(filter);
-            Assert.AreEqual(1, Result.Count);
+            Assert.AreEqual(_testData.Count, Result.Count);
         }
 
         [TestMethod]
