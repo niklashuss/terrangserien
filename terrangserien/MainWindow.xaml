@@ -1,0 +1,70 @@
+﻿<Window x:Class="terrangserien.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:terrangserien"
+        mc:Ignorable="d"
+        Title="Terrängserien" Height="800" Width="1024">
+    <Grid HorizontalAlignment="Stretch" Width="Auto" Margin="2,2,2,2">
+        <TabControl HorizontalAlignment="Left" Width="1014" Height="Auto" VerticalAlignment="Top">
+            <TabItem Header="Registrering">
+                <Grid Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Grid Height="25" VerticalAlignment="Top" Margin="10,0" Width="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" HorizontalAlignment="Left">Förnamn:</Label>
+                        <TextBox Name="TextBox_Name" Grid.Column="1" TextChanged="TextBox_Name_TextChanged" ></TextBox>
+                        <Label Grid.Column="2" HorizontalAlignment="Left">Efternamn:</Label>
+                        <TextBox Name="TextBox_Surname" Grid.Column="3" TextChanged="TextBox_Surname_TextChanged" ></TextBox>
+                        <Label Grid.Column="4" HorizontalAlignment="Left">Kön:</Label>
+                        <TextBox Name="TextBox_Gender" Grid.Column="5" TextChanged="TextBox_Gender_TextChanged"></TextBox>
+                        <Label Grid.Column="6" HorizontalAlignment="Left">Personnummer:</Label>
+                        <TextBox Name="TextBox_SocialNumber" Grid.Column="7" TextChanged="TextBox_SocialNumber_TextChanged"></TextBox>
+                        <Label Grid.Column="8" HorizontalAlignment="Left">Nummer:</Label>
+                        <TextBox Name="TextBox_Number" Grid.Column="9" TextChanged="TextBox_Number_TextChanged"></TextBox>
+                        <Button Name="Button_Add" Content="Add" Grid.Column="10" Click="Button_Add_Click" Width="50" Margin="10,2,2,2" ></Button>
+                    </Grid>
+                    <DataGrid Margin="0,30,-0.2,0" Name="DataGridPersons" Width="Auto" Height="Auto" 
+                              VerticalAlignment="Top" 
+                              GridLinesVisibility="Horizontal" 
+                              AutoGenerateColumns="False" 
+                              HeadersVisibility="All" 
+                              VirtualizingPanel.IsVirtualizing="true" 
+                              FontFamily="Consolas" 
+                              AlternatingRowBackground="LightGray" 
+                              CellEditEnding="DataGridPersons_CellEditEnding">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Namn"         Binding="{Binding Name}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="Efternamn"    Binding="{Binding Surname}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="Kön"          Binding="{Binding Gender}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="Personnummer" Binding="{Binding SocialNumber}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="Sträcka"      Binding="{Binding Distance}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="Nummer"       Binding="{Binding Number}"  MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="Klass"        Binding="{Binding Klass}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="7:e"          Binding="{Binding Result0}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="9:e"          Binding="{Binding Result1}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="14:e"         Binding="{Binding Result2}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="16:e"         Binding="{Binding Result3}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="21:e"         Binding="{Binding Result4}" MinWidth="100" Width="Auto"/>
+                            <DataGridTextColumn Header="23:e"         Binding="{Binding Result5}" MinWidth="100" Width="Auto"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Resultat">
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
