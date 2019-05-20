@@ -5,24 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:terrangserien"
         mc:Ignorable="d"
-        Title="Terrängserien" Height="800" Width="1024">
-    <Grid HorizontalAlignment="Stretch" Width="Auto" Margin="2,2,2,2">
-        <TabControl HorizontalAlignment="Left" Width="1014" Height="Auto" VerticalAlignment="Top">
+        Title="Terrängserien" Height="800" Width="1338.644">
+    <Grid HorizontalAlignment="Stretch" Width="Auto" Margin="0,2,0,2">
+        <TabControl HorizontalAlignment="Left" Width="Auto" Height="Auto" VerticalAlignment="Top">
             <TabItem Header="Registrering">
-                <Grid Margin="2,2,2,2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <Grid Height="25" VerticalAlignment="Top" Margin="10,0" Width="Auto">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="70"/>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="65"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="55"/>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition Width="55"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" HorizontalAlignment="Left">Förnamn:</Label>
                         <TextBox Name="TextBox_Name" Grid.Column="1" TextChanged="TextBox_Name_TextChanged" ></TextBox>
@@ -34,7 +38,11 @@
                         <TextBox Name="TextBox_SocialNumber" Grid.Column="7" TextChanged="TextBox_SocialNumber_TextChanged"></TextBox>
                         <Label Grid.Column="8" HorizontalAlignment="Left">Nummer:</Label>
                         <TextBox Name="TextBox_Number" Grid.Column="9" TextChanged="TextBox_Number_TextChanged"></TextBox>
-                        <Button Name="Button_Add" Content="Add" Grid.Column="10" Click="Button_Add_Click" Width="50" Margin="10,2,2,2" ></Button>
+                        <Label Grid.Column="10" HorizontalAlignment="Left">Klass:</Label>
+                        <TextBox Name="TextBox_Klass" Grid.Column="11" TextChanged="TextBox_Klass_TextChanged"></TextBox>
+                        <Label Grid.Column="12" HorizontalAlignment="Left">Sträcka:</Label>
+                        <TextBox Name="TextBox_Distance" Grid.Column="13" TextChanged="TextBox_Distance_TextChanged"></TextBox>
+                        <Button Name="Button_Add" Content="Add" Grid.Column="14" Click="Button_Add_Click" Width="50" Margin="10,2,2,2" ></Button>
                     </Grid>
                     <DataGrid Margin="0,30,-0.2,0" Name="DataGridPersons" Width="Auto" Height="Auto" 
                               VerticalAlignment="Top" 

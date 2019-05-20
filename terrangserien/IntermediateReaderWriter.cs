@@ -25,12 +25,12 @@ namespace terrangserien
                     person.SocialNumber = entries[i++];
                     person.Number = entries[i++];
                     person.Klass = entries[i++];
-                    person.Result0 = entries[i++];
-                    person.Result1 = entries[i++];
-                    person.Result2 = entries[i++];
-                    person.Result3 = entries[i++];
-                    person.Result4 = entries[i++];
-                    person.Result5 = entries[i++];
+                    person.Result(0, Result.Create(ref entries[i++]));
+                    person.Result(1, Result.Create(ref entries[i++]));
+                    person.Result(2, Result.Create(ref entries[i++]));
+                    person.Result(3, Result.Create(ref entries[i++]));
+                    person.Result(4, Result.Create(ref entries[i++]));
+                    person.Result(5, Result.Create(ref entries[i++]));
                     persons.Add(person);
                 }
             }
@@ -53,12 +53,12 @@ namespace terrangserien
                         person.SocialNumber,
                         person.Number,
                         person.Klass,
-                        person.Result0,
-                        person.Result1,
-                        person.Result2,
-                        person.Result3,
-                        person.Result4,
-                        person.Result5
+                        person.Result(0),
+                        person.Result(1),
+                        person.Result(2),
+                        person.Result(3),
+                        person.Result(4),
+                        person.Result(5)
                         );
                 }
             }

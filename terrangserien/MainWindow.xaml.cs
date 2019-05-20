@@ -28,15 +28,14 @@ namespace terrangserien
                 .CreateLogger();
 
             Log.Logger.Information("Starting application");
-//            string inFilePath = @"Terrängserie 2019_14_maj.xlsx";
-//            persons = ExcelReaderWriter.Read(ref inFilePath);
+ //           string inFilePath = @"Terrängserie 2019_14_maj.xlsx";
+ //           persons = ExcelReaderWriter.Read(ref inFilePath);
 
 //            IntermediateReaderWriter.Write("terrangserien.csv", ref persons);
             persons = IntermediateReaderWriter.Read(INTERMEDIATE_FILE_NAME);
-            /*
-                        string outFilePath = @"Terrängserien_new.xlsx";
-                        ExcelReaderWriter.Write(ref outFilePath, ref persons);
-                        */
+            string outFilePath = @"Terrängserien_new.xlsx";
+            ExcelReaderWriter.Write(ref outFilePath, ref persons);
+
             DataGridPersons.ItemsSource = persons;
             filteredPersons = persons;
         }
@@ -48,6 +47,8 @@ namespace terrangserien
             string gender = TextBox_Gender.Text.ToLower().Trim();
             string socialNumber = TextBox_SocialNumber.Text.ToLower().Trim();
             string number = TextBox_Number.Text.ToLower().Trim();
+            string klass = TextBox_Klass.Text.ToLower().Trim();
+            string distance = TextBox_Distance.Text.ToLower().Trim();
 
             PersonFilter filter = new PersonFilter {
                 Name = name,
@@ -55,6 +56,8 @@ namespace terrangserien
                 Gender = gender,
                 SocialNumber = socialNumber,
                 Number = number,
+                Klass = klass,
+                Distance = distance,
             };
             filteredPersons = persons.FilterPersons(filter);
             return filteredPersons;
@@ -81,6 +84,16 @@ namespace terrangserien
         }
 
         private void TextBox_Number_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            DataGridPersons.ItemsSource = CreateFilter();
+        }
+
+        private void TextBox_Klass_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            DataGridPersons.ItemsSource = CreateFilter();
+        }
+
+        private void TextBox_Distance_TextChanged(object sender, TextChangedEventArgs e)
         {
             DataGridPersons.ItemsSource = CreateFilter();
         }
@@ -129,12 +142,12 @@ namespace terrangserien
                 person.SocialNumber,
                 person.Number,
                 person.Klass,
-                person.Result0,
-                person.Result1,
-                person.Result2,
-                person.Result3,
-                person.Result4,
-                person.Result5
+                person.Result(0),
+                person.Result(1),
+                person.Result(2),
+                person.Result(3),
+                person.Result(4),
+                person.Result(5)
                 );
 
             // stupid...
@@ -168,27 +181,27 @@ namespace terrangserien
             }
             else if (col == 7)
             {
-                person.Result0 = value;
+                person.Result(0, Result.Create(ref value));
             }
             else if (col == 8)
             {
-                person.Result1 = value;
+                person.Result(1, Result.Create(ref value));
             }
             else if (col == 9)
             {
-                person.Result2 = value;
+                person.Result(2, Result.Create(ref value));
             }
             else if (col == 10)
             {
-                person.Result3 = value;
+                person.Result(3, Result.Create(ref value));
             }
             else if (col == 11)
             {
-                person.Result4 = value;
+                person.Result(4, Result.Create(ref value));
             }
             else if (col == 12)
             {
-                person.Result5 = value;
+                person.Result(5, Result.Create(ref value));
             }
 
             persons[realRow] = person;
@@ -201,12 +214,12 @@ namespace terrangserien
                 person.SocialNumber,
                 person.Number,
                 person.Klass,
-                person.Result0,
-                person.Result1,
-                person.Result2,
-                person.Result3,
-                person.Result4,
-                person.Result5
+                person.Result(0),
+                person.Result(1),
+                person.Result(2),
+                person.Result(3),
+                person.Result(4),
+                person.Result(5)
                 );
 
             IntermediateReaderWriter.Write(INTERMEDIATE_FILE_NAME, ref persons);
