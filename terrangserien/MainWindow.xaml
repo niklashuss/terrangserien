@@ -7,7 +7,19 @@
         mc:Ignorable="d"
         Title="Terrängserien" Height="800" Width="1338.644">
     <Grid HorizontalAlignment="Stretch" Width="Auto" Margin="0,2,0,2">
-        <TabControl HorizontalAlignment="Left" Width="Auto" Height="Auto" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" DockPanel.Dock="Top">
+            <MenuItem Header="_Fil">
+                <MenuItem Header="_Öppna Excel" Click="MenuItem_Open_Excel_Click"></MenuItem>
+                <MenuItem Header="_Spara Excel" Click="MenuItem_Save_Excel_Click"></MenuItem>
+                <Separator/>
+                <MenuItem Header="_Avsluta" Click="MenuItem_Quit_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <TabControl Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Height="Auto" VerticalAlignment="Top">
             <TabItem Header="Registrering">
                 <Grid Margin="0,0,0,0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <Grid Height="25" VerticalAlignment="Top" Margin="10,0" Width="Auto">

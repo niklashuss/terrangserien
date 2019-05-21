@@ -234,5 +234,21 @@ namespace terrangserien
             var editedTextbox = e.EditingElement as TextBox;
             UpdatePersonFromRowColumn(row, col, editedTextbox.Text);
         }
+
+        private void MenuItem_Open_Excel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Save_Excel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Quit_Click(object sender, RoutedEventArgs e)
+        {
+            Log.Logger.Information("Closing program.");
+            Close();
+        }
     }
 }
