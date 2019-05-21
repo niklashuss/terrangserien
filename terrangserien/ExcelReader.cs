@@ -1,6 +1,5 @@
 ﻿using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using Serilog;
 using System.Collections.Generic;
 using System.IO;
 
@@ -41,15 +40,6 @@ namespace terrangserien
                     person.Result(4, Result.Create(row.GetCell(11).NumericCellValue));
                     person.Result(5, Result.Create(row.GetCell(12).NumericCellValue));
                     persons.Add(person);
-                    if (person.Number == "769")
-                    {
-                        Log.Logger.Information("NIKLAS: 768: r0: {0}", person.Result0);
-                        Log.Logger.Information("NIKLAS: 768: r1: {0}", person.Result1);
-                        Log.Logger.Information("NIKLAS: 768: r2: {0}", person.Result2);
-                        Log.Logger.Information("NIKLAS: 768: r3: {0}", person.Result3);
-                        Log.Logger.Information("NIKLAS: 768: r4: {0}", person.Result4);
-                        Log.Logger.Information("NIKLAS: 768: r5: {0}", person.Result5);
-                    }
                 }
                 workbook.Close();
             }
