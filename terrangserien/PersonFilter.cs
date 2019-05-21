@@ -45,7 +45,7 @@ namespace terrangserien
                 .Where(p => string.IsNullOrWhiteSpace(filter.Gender) || p.Gender.ToLower() == filter.Gender.ToLower().Trim())
                 .Where(p => string.IsNullOrWhiteSpace(filter.Distance) || p.Distance.StartsWith(filter.Distance.Trim()))
                 .Where(p => string.IsNullOrWhiteSpace(filter.Klass) || p.Klass.ToLower().StartsWith(filter.Klass.ToLower().Trim()))
-                .Where(p => p.Result(filter.Day).Minutes > 0)
+                .Where(p => p.Result(filter.Day).Time > 0)
                 ;
             return q.ToList();
         }

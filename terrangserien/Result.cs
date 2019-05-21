@@ -1,29 +1,24 @@
-﻿using System;
+﻿using Serilog;
+using System;
 
 namespace terrangserien
 {
     public class Result : IComparable
     {
-        public int Minutes { get; set; }
-        public int Seconds { get; set; }
+        public double Time { get; set; }
 
-        private Result(int minutes, int seconds)
+        private Result(double value)
         {
-            Minutes = minutes;
-            Seconds = seconds;
+            Time = value;
         }
 
         public override string ToString()
         {
-            if (Minutes == 0 && Seconds == 0)
+            if (Time == 0.0)
             {
                 return "";
             }
-            if (Seconds < 10)
-            {
-                return string.Format("{0},0{1}", Minutes, Seconds);
-            }
-            return string.Format("{0},{1}", Minutes, Seconds);
+            return string.Format("{0:0.00}", Time);
         }
 
         public int CompareTo(object obj)
@@ -33,39 +28,30 @@ namespace terrangserien
                 return 1;
             }
             Result other = obj as Result;
-            if (other.Minutes > Minutes)
+            if (other.Time > Time)
             {
                 return -1;
             }
-            if (other.Minutes == Minutes)
+            if (other.Time == Time)
             {
-                if (other.Seconds == Seconds)
-                {
-                    return 0;
-                }
-                if (other.Seconds > Seconds)
-                {
-                    return -1;
-                }
+                return 0;
             }
             return 1;
         }
 
-        public static Result Create(ref string str)
+        public static Result Create(double value)
         {
-            if (string.IsNullOrEmpty(str))
-            {
-                return new Result(0, 0);
-            }
+            return new Result(value);
+        }
 
-            string[] strings = str.Split(',');
-            int minutes = int.Parse(strings[0]);
-            if (strings.Length == 1)
+        public static Result Create(string value)
+        {
+            double dbl = 0.0f;
+            if (value.Length > 0)
             {
-                return new Result(minutes, 0);
+                dbl = double.Parse(value);
             }
-            int seconds = int.Parse(strings[1]);
-            return new Result(minutes, seconds);
+            return new Result(dbl);
         }
     }
 }

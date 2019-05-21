@@ -27,6 +27,13 @@ namespace terrangserien
             cell.SetCellValue(value);
         }
 
+        private static void CreateCellWithStyle(ref IRow row, int column, int value, ref XSSFCellStyle style)
+        {
+            ICell cell = row.CreateCell(column, CellType.Numeric);
+            cell.CellStyle = style;
+            cell.SetCellValue(value);
+        }
+
         public static void WriteAttendance(ref ISheet sheet, ref IList<Person> persons, ref Styles styles)
         {
             sheet.SetColumnWidth(0, 256 * 7);
@@ -44,22 +51,30 @@ namespace terrangserien
             sheet.SetColumnWidth(12, 256 * 7);
 
             int i = 0;
+            WriteSmallHeaderAthletes(ref sheet, i++, ref styles);
             foreach (Person person in persons)
             {
                 IRow row = sheet.CreateRow(i);
                 CreateCellWithStyle(ref row, 0, person.Distance, ref styles.normalCenter);
                 CreateCellWithStyle(ref row, 1, person.Gender, ref styles.normalCenter);
                 CreateCellWithStyle(ref row, 2, person.SocialNumber, ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 3, person.Number, ref styles.normalCenter);
+                if (person.Number.Length == 0)
+                {
+                    CreateCellWithStyle(ref row, 3, person.Number, ref styles.normalCenter);
+                }
+                else
+                {
+                    CreateCellWithStyle(ref row, 3, int.Parse(person.Number), ref styles.normalCenter);
+                }
                 CreateCellWithStyle(ref row, 4, person.Name, ref styles.normalLeft);
                 CreateCellWithStyle(ref row, 5, person.Surname, ref styles.normalLeft);
                 CreateCellWithStyle(ref row, 6, person.Klass, ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 7, person.Result(0).ToString(), ref styles.normalLeft);
-                CreateCellWithStyle(ref row, 8, person.Result(1).ToString(), ref styles.normalLeft);
-                CreateCellWithStyle(ref row, 9, person.Result(2).ToString(), ref styles.normalLeft);
-                CreateCellWithStyle(ref row, 10, person.Result(3).ToString(), ref styles.normalLeft);
-                CreateCellWithStyle(ref row, 11, person.Result(4).ToString(), ref styles.normalLeft);
-                CreateCellWithStyle(ref row, 12, person.Result(5).ToString(), ref styles.normalLeft);
+                CreateCellWithStyle(ref row, 7, person.Result(0).ToString(), ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 8, person.Result(1).ToString(), ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 9, person.Result(2).ToString(), ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 10, person.Result(3).ToString(), ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 11, person.Result(4).ToString(), ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 12, person.Result(5).ToString(), ref styles.normalCenter);
                 i++;
             }
         }
@@ -100,6 +115,27 @@ namespace terrangserien
             CreateCellWithStyle(ref row, 3, "Efternamn", ref styles.normalHeaderLeft);
             CreateCellWithStyle(ref row, 4, "Åldersgrupp", ref styles.normalHeaderCenter);
             CreateCellWithStyle(ref row, 5, "Resultat", ref styles.normalHeaderCenter);
+            currentRow++;
+            return currentRow;
+        }
+
+        private static int WriteSmallHeaderAthletes(ref ISheet sheet, int startRow, ref Styles styles)
+        {
+            int currentRow = startRow;
+            IRow row = sheet.CreateRow(currentRow);
+            CreateCellWithStyle(ref row, 0, "Sträcka", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 1, "Kön", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 2, "Född år", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 3, "Startnr", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 4, "Förnamn", ref styles.normalHeaderLeft);
+            CreateCellWithStyle(ref row, 5, "Efternamn", ref styles.normalHeaderLeft);
+            CreateCellWithStyle(ref row, 6, "Klass", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 7, "1", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 8, "2", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 9, "3", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 10, "4", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 11, "5", ref styles.normalHeaderCenter);
+            CreateCellWithStyle(ref row, 12, "6", ref styles.normalHeaderCenter);
             currentRow++;
             return currentRow;
         }

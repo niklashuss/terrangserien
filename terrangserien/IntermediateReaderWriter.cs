@@ -10,29 +10,37 @@ namespace terrangserien
         {
             Log.Logger.Information("Reading {filePath}", filePath);
             IList<Person> persons = new List<Person>();
-            using (StreamReader file = new StreamReader(filePath))
+            try
             {
-                string line;
-                while ((line = file.ReadLine()) != null)
+                using (StreamReader file = new StreamReader(filePath))
                 {
-                    int i = 0;
-                    string[] entries = line.Split(';');
-                    Person person = Person.Create();
-                    person.Name = entries[i++];
-                    person.Surname = entries[i++];
-                    person.Distance = entries[i++];
-                    person.Gender = entries[i++];
-                    person.SocialNumber = entries[i++];
-                    person.Number = entries[i++];
-                    person.Klass = entries[i++];
-                    person.Result(0, Result.Create(ref entries[i++]));
-                    person.Result(1, Result.Create(ref entries[i++]));
-                    person.Result(2, Result.Create(ref entries[i++]));
-                    person.Result(3, Result.Create(ref entries[i++]));
-                    person.Result(4, Result.Create(ref entries[i++]));
-                    person.Result(5, Result.Create(ref entries[i++]));
-                    persons.Add(person);
+                    string line;
+                    while ((line = file.ReadLine()) != null)
+                    {
+                        int i = 0;
+                        string[] entries = line.Split(';');
+                        Person person = Person.Create();
+                        person.Name = entries[i++];
+                        person.Surname = entries[i++];
+                        person.Distance = entries[i++];
+                        person.Gender = entries[i++];
+                        person.SocialNumber = entries[i++];
+                        person.Number = entries[i++];
+                        person.Klass = entries[i++];
+                        person.Result(0, Result.Create(entries[i++]));
+                        person.Result(1, Result.Create(entries[i++]));
+                        person.Result(2, Result.Create(entries[i++]));
+                        person.Result(3, Result.Create(entries[i++]));
+                        person.Result(4, Result.Create(entries[i++]));
+                        person.Result(5, Result.Create(entries[i++]));
+                        persons.Add(person);
+                    }
                 }
+
+            }
+            catch (FileNotFoundException exception)
+            {
+                Log.Logger.Warning("Couldn't open intermediate file.");
             }
             Log.Logger.Information("Read {0} entries", persons.Count);
             return persons;

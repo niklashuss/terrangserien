@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Microsoft.Win32;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +29,7 @@ namespace terrangserien
                 .CreateLogger();
 
             Log.Logger.Information("Starting application");
-//            string inFilePath = @"Terrängserie 2019_14_maj.xlsx";
-//            persons = ExcelReader.Read(ref inFilePath);
-
-//            IntermediateReaderWriter.Write("terrangserien.csv", ref persons);
             persons = IntermediateReaderWriter.Read(INTERMEDIATE_FILE_NAME);
-            string outFilePath = @"Terrängserien_new.xlsx";
-            ExcelWriter.Write(ref outFilePath, ref persons);
 
             DataGridPersons.ItemsSource = persons;
             filteredPersons = persons;
@@ -181,27 +176,27 @@ namespace terrangserien
             }
             else if (col == 7)
             {
-                person.Result(0, Result.Create(ref value));
+                person.Result(0, Result.Create(value));
             }
             else if (col == 8)
             {
-                person.Result(1, Result.Create(ref value));
+                person.Result(1, Result.Create(value));
             }
             else if (col == 9)
             {
-                person.Result(2, Result.Create(ref value));
+                person.Result(2, Result.Create(value));
             }
             else if (col == 10)
             {
-                person.Result(3, Result.Create(ref value));
+                person.Result(3, Result.Create(value));
             }
             else if (col == 11)
             {
-                person.Result(4, Result.Create(ref value));
+                person.Result(4, Result.Create(value));
             }
             else if (col == 12)
             {
-                person.Result(5, Result.Create(ref value));
+                person.Result(5, Result.Create(value));
             }
 
             persons[realRow] = person;
@@ -237,12 +232,25 @@ namespace terrangserien
 
         private void MenuItem_Open_Excel_Click(object sender, RoutedEventArgs e)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Excel (*.xlsx)|*.xlsx";
+            openFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                Log.Logger.Information("File selected: {0}", openFileDialog.FileName);
+                string filePath = openFileDialog.FileName;
+                persons = ExcelReader.Read(ref filePath);
+                filteredPersons = persons;
+                DataGridPersons.ItemsSource = persons;
+                IntermediateReaderWriter.Write("terrangserien.csv", ref persons);
+            }
         }
 
         private void MenuItem_Save_Excel_Click(object sender, RoutedEventArgs e)
         {
-
+            string outFilePath = @"Terrängserien_new.xlsx";
+            ExcelWriter.Write(ref outFilePath, ref persons);
+            MessageBox.Show("Sparade filen till en ny Excel-fil", "Sparad");
         }
 
         private void MenuItem_Quit_Click(object sender, RoutedEventArgs e)
