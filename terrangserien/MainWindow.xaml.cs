@@ -28,13 +28,13 @@ namespace terrangserien
                 .CreateLogger();
 
             Log.Logger.Information("Starting application");
- //           string inFilePath = @"Terrängserie 2019_14_maj.xlsx";
- //           persons = ExcelReaderWriter.Read(ref inFilePath);
+//            string inFilePath = @"Terrängserie 2019_14_maj.xlsx";
+//            persons = ExcelReader.Read(ref inFilePath);
 
 //            IntermediateReaderWriter.Write("terrangserien.csv", ref persons);
             persons = IntermediateReaderWriter.Read(INTERMEDIATE_FILE_NAME);
             string outFilePath = @"Terrängserien_new.xlsx";
-            ExcelReaderWriter.Write(ref outFilePath, ref persons);
+            ExcelWriter.Write(ref outFilePath, ref persons);
 
             DataGridPersons.ItemsSource = persons;
             filteredPersons = persons;
