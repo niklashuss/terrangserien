@@ -27,11 +27,14 @@ namespace terrangserien
             cell.SetCellValue(value);
         }
 
-        private static void CreateCellWithStyle(ref IRow row, int column, int value, ref XSSFCellStyle style)
+        private static void CreateCellWithStyle(ref IRow row, int column, double value, ref XSSFCellStyle style)
         {
-            ICell cell = row.CreateCell(column, CellType.Numeric);
-            cell.CellStyle = style;
-            cell.SetCellValue(value);
+            if (value > 0.1)
+            {
+                ICell cell = row.CreateCell(column, CellType.Numeric);
+                cell.CellStyle = style;
+                cell.SetCellValue(value);
+            }
         }
 
         public static void WriteAttendance(ref ISheet sheet, ref IList<Person> persons, ref Styles styles)
@@ -69,12 +72,12 @@ namespace terrangserien
                 CreateCellWithStyle(ref row, 4, person.Name, ref styles.normalLeft);
                 CreateCellWithStyle(ref row, 5, person.Surname, ref styles.normalLeft);
                 CreateCellWithStyle(ref row, 6, person.Klass, ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 7, person.Result(0).ToString(), ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 8, person.Result(1).ToString(), ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 9, person.Result(2).ToString(), ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 10, person.Result(3).ToString(), ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 11, person.Result(4).ToString(), ref styles.normalCenter);
-                CreateCellWithStyle(ref row, 12, person.Result(5).ToString(), ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 7, person.Result(0).Time, ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 8, person.Result(1).Time, ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 9, person.Result(2).Time, ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 10, person.Result(3).Time, ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 11, person.Result(4).Time, ref styles.normalCenter);
+                CreateCellWithStyle(ref row, 12, person.Result(5).Time, ref styles.normalCenter);
                 i++;
             }
         }

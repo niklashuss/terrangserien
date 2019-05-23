@@ -33,12 +33,18 @@ namespace terrangserien
                     person.Name = row.GetCell(4).StringCellValue.Trim();
                     person.Surname = row.GetCell(5).StringCellValue.Trim();
                     person.Klass = row.GetCell(6).StringCellValue.Trim();
-                    person.Result(0, Result.Create(row.GetCell(7).NumericCellValue));
-                    person.Result(1, Result.Create(row.GetCell(8).NumericCellValue));
-                    person.Result(2, Result.Create(row.GetCell(9).NumericCellValue));
-                    person.Result(3, Result.Create(row.GetCell(10).NumericCellValue));
-                    person.Result(4, Result.Create(row.GetCell(11).NumericCellValue));
-                    person.Result(5, Result.Create(row.GetCell(12).NumericCellValue));
+                    for (int c = 0; c < 6; c++)
+                    {
+                        ICell cell = row.GetCell(c + 7);
+                        if (cell == null || cell.CellType != CellType.Numeric)
+                        {
+                            person.Result(c, Result.Create(0.0));
+                        }
+                        else
+                        {
+                            person.Result(c, Result.Create(cell.NumericCellValue));
+                        }
+                    }
                     persons.Add(person);
                 }
                 workbook.Close();

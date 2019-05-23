@@ -7,6 +7,10 @@ namespace terrangserien
         private Person(int id)
         {
             Id = id;
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = terrangserien.Result.Create(0.0);
+            }
         }
 
         private Result[] result = new Result[6];
