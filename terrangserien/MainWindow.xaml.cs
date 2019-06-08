@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace terrangserien
 {
@@ -33,6 +34,14 @@ namespace terrangserien
 
             DataGridPersons.ItemsSource = persons;
             filteredPersons = persons;
+            foreach (Person person in persons)
+            {
+                string klass = LooseFunctions.GetClassFromSocialNumber(person.SocialNumber);
+                if (klass != "")
+                {
+                    person.Klass = klass;
+                }
+            }
         }
 
         private IList<Person> CreateFilter()
@@ -58,28 +67,64 @@ namespace terrangserien
             return filteredPersons;
         }
 
+
+        private void SetFieldAsError(ref TextBox textBox)
+        {
+            textBox.Background = Brushes.Red;
+        }
+
+        private void SetFieldAsOk(ref TextBox textBox)
+        {
+            textBox.Background = Brushes.White;
+        }
+
+        private void SetAllFieldsAsOk()
+        {
+            SetFieldAsOk(ref TextBox_Name);
+            SetFieldAsOk(ref TextBox_Surname);
+            SetFieldAsOk(ref TextBox_Gender);
+            SetFieldAsOk(ref TextBox_SocialNumber);
+            SetFieldAsOk(ref TextBox_Number);
+        }
+
+        private void ClearAllFields()
+        {
+            TextBox_Name.Text = "";
+            TextBox_Surname.Text = "";
+            TextBox_Gender.Text = "";
+            TextBox_SocialNumber.Text = "";
+            TextBox_Number.Text = "";
+            TextBox_Klass.Text = "";
+            TextBox_Distance.Text = "";
+        }
+
         private void TextBox_Name_TextChanged(object sender, TextChangedEventArgs e)
         {
+            SetFieldAsOk(ref TextBox_Name);
             DataGridPersons.ItemsSource = CreateFilter();
         }
 
         private void TextBox_Surname_TextChanged(object sender, TextChangedEventArgs e)
         {
+            SetFieldAsOk(ref TextBox_Surname);
             DataGridPersons.ItemsSource = CreateFilter();
         }
 
         private void TextBox_Gender_TextChanged(object sender, TextChangedEventArgs e)
         {
+            SetFieldAsOk(ref TextBox_Gender);
             DataGridPersons.ItemsSource = CreateFilter();
         }
 
         private void TextBox_SocialNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
+            SetFieldAsOk(ref TextBox_SocialNumber);
             DataGridPersons.ItemsSource = CreateFilter();
         }
 
         private void TextBox_Number_TextChanged(object sender, TextChangedEventArgs e)
         {
+            SetFieldAsOk(ref TextBox_Number);
             DataGridPersons.ItemsSource = CreateFilter();
         }
 
@@ -96,32 +141,68 @@ namespace terrangserien
         private void Button_Add_Click(object sender, RoutedEventArgs e)
         {
             string name = TextBox_Name.Text;
+            bool hasError = false;
             if (name.Length == 0)
             {
-                return;
+                SetFieldAsError(ref TextBox_Name);
+                hasError = true;
             }
+
             string surname = TextBox_Surname.Text;
             if (surname.Length == 0)
             {
-                return;
+                SetFieldAsError(ref TextBox_Surname);
+                hasError = true;
             }
+
             string gender = TextBox_Gender.Text;
             if (gender.Length == 0)
             {
-                return;
+                SetFieldAsError(ref TextBox_Gender);
+                hasError = true;
             }
+
             string socialNumber = TextBox_SocialNumber.Text;
             if (socialNumber.Length == 0)
             {
-                return;
+                SetFieldAsError(ref TextBox_SocialNumber);
+                hasError = true;
             }
+
             string number = TextBox_Number.Text;
             if (number.Length == 0)
             {
+                SetFieldAsError(ref TextBox_Number);
+                hasError = true;
+            }
+
+            if (hasError)
+            {
                 return;
             }
-//            DataGridPersons.ItemsSource = items;
-            Console.WriteLine("NIKLAS. button pressed");
+
+            Person person = Person.Create();
+            person.Name = name;
+            person.Surname = surname;
+            person.SocialNumber = socialNumber;
+            person.Gender = gender;
+            person.Number = number;
+            person.Klass = LooseFunctions.GetClassFromSocialNumber(socialNumber);
+            persons.Add(person);
+
+            TextBox_Name.Text = "";
+            TextBox_Surname.Text = "";
+            TextBox_Gender.Text = "";
+            TextBox_SocialNumber.Text = "";
+            TextBox_Number.Text = "";
+            DataGridPersons.ItemsSource = persons;
+            DataGridPersons.ScrollIntoView(person);
+        }
+
+        private void Button_Clear_Click(object sender, RoutedEventArgs e)
+        {
+            SetAllFieldsAsOk();
+            ClearAllFields();
         }
 
         private void UpdatePersonFromRowColumn(int row, int col, string value)
@@ -161,6 +242,7 @@ namespace terrangserien
             else if (col == 3)
             {
                 person.SocialNumber = value;
+                person.Klass = LooseFunctions.GetClassFromSocialNumber(person.SocialNumber);
             }
             else if (col == 4)
             {
@@ -217,6 +299,7 @@ namespace terrangserien
                 person.Result(5)
                 );
 
+            
             IntermediateReaderWriter.Write(INTERMEDIATE_FILE_NAME, ref persons);
         }
 

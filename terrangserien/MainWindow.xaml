@@ -39,6 +39,7 @@
                             <ColumnDefinition Width="50"/>
                             <ColumnDefinition Width="55"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" HorizontalAlignment="Left">Förnamn:</Label>
                         <TextBox Name="TextBox_Name" Grid.Column="1" TextChanged="TextBox_Name_TextChanged" ></TextBox>
@@ -54,7 +55,8 @@
                         <TextBox Name="TextBox_Klass" Grid.Column="11" TextChanged="TextBox_Klass_TextChanged"></TextBox>
                         <Label Grid.Column="12" HorizontalAlignment="Left">Sträcka:</Label>
                         <TextBox Name="TextBox_Distance" Grid.Column="13" TextChanged="TextBox_Distance_TextChanged"></TextBox>
-                        <Button Name="Button_Add" Content="Add" Grid.Column="14" Click="Button_Add_Click" Width="50" Margin="10,2,2,2" ></Button>
+                        <Button Name="Button_Add" Content="Lägg till" Grid.Column="14" Click="Button_Add_Click" Width="50" Margin="10,2,2,2" ></Button>
+                        <Button Name="Button_Clear" Content="Rensa" Grid.Column="15" Click="Button_Clear_Click" Width="50" Margin="10,2,2,2" ></Button>
                     </Grid>
                     <DataGrid Margin="0,30,-0.2,0" Name="DataGridPersons" Width="Auto" Height="Auto" 
                               VerticalAlignment="Top" 
